@@ -6,80 +6,99 @@ var ansOne = document.querySelector("#ansOptionOne");
 var ansTwo = document.querySelector("#ansOptionTwo");
 var ansThree = document.querySelector("#ansOptionThree");
 var ansFour = document.querySelector("#ansOptionFour");
-
-
+var nextQuestion = document.querySelector("#nextBtn");
+var selectedQuestion = null; // Global variable to save the currents question state
 
 // An array of objects to store Questions and Answers
 
-// Function to build questions and answers
+  var codeQuiz = [
+    {
+      questionText: "Arrays in Javascript are used to store:",
+      answers: [
+        { optionText: "Numbers and Strings", correct: false },
+        { optionText: "Boolean", correct: false },
+        { optionText: "Other arrays", correct: false },
+        { optionText: "All of the above", correct: true },
+      ],
+    },
 
-function generateQuestionsandAnswers(){
-var codeQuiz = [
-  {
-    questionText: "Arrays in Javascript are used to store:",
-    answers: [
-      { optionText: "Numbers and Strings", correct: false },
-      { optionText: "Boolean", correct: false },
-      { optionText: "Other arrays", correct: false },
-      { optionText: "All of the above", correct: true },
-    ],
-  },
+    {
+      questionText:
+        "Which one of these is a primitive data type in Javascript?:",
+      answers: [
+        { optionText: "String", correct: false },
+        { optionText: "Boolean", correct: false },
+        { optionText: "Number", correct: false },
+        { optionText: "All of the above", correct: true },
+      ],
+    },
 
-  {
-    questionText: "Which one of these is a primitive data type in Javascript?:",
-    answers: [
-      { optionText: "String", correct: false },
-      { optionText: "Boolean", correct: false },
-      { optionText: "Number", correct: false },
-      { optionText: "All of the above", correct: true },
-    ],
-  },
+    {
+      questionText: "Strings in Javascript should be enclosed within _______:",
+      answers: [
+        { optionText: "Quotes", correct: true },
+        { optionText: "Question Marks", correct: false },
+        { optionText: "Parenthesis", correct: false },
+        { optionText: "Curly braces", correct: false },
+      ],
+    },
 
-  {
-    questionText: "Strings in Javascript should be enclosed within _______:",
-    answers: [
-      { optionText: "Quotes", correct: true },
-      { optionText: "Question Marks", correct: false },
-      { optionText: "Parenthesis", correct: false },
-      { optionText: "Curly braces", correct: true },
-    ],
-  },
-];
-return codeQuiz;
+    {
+      questionText: "The if...else condition is enclosed within _______:",
+      answers: [
+        { optionText: "Quotes", correct: false },
+        { optionText: "Question Marks", correct: false },
+        { optionText: "Parenthesis", correct: true },
+        { optionText: "Curly braces", correct: false },
+      ],
+    },
+  ];
+ 
+
+function randomQuestionGenerator(codeQuiz) {
+  return codeQuiz[Math.floor(Math.random() * codeQuiz.length)];
 }
-
-
-function randomQuestionGenerator(codeQuiz){
-    return codeQuiz[Math.floor(Math.random() * codeQuiz.length)];
-  }
 
 // Render a random question on click of start button
 
 startBtn.addEventListener("click", renderCodeQuiz);
 
-
 // Fucntion to render the question and answers
 
-function renderCodeQuiz()
-{
-    var codeQuizArr = generateQuestionsandAnswers();
-    var questionAns = randomQuestionGenerator(codeQuizArr);
-    
-    quizQuestion.textContent = questionAns.questionText;
-    ansOne.innerHTML = questionAns.answers[0].optionText;
-    ansTwo.innerHTML = questionAns.answers[1].optionText;
-    ansThree.innerHTML = questionAns.answers[2].optionText;
-    ansFour.innerHTML = questionAns.answers[3].optionText;
-    
- 
+function renderCodeQuiz() {
+  var codeQuizArr = generateQuestionsandAnswers();
+  var questionAns = randomQuestionGenerator(codeQuizArr);
+  selectedQuestion = questionAns;
+
+  quizQuestion.textContent = questionAns.questionText;
+  ansOne.innerHTML = questionAns.answers[0].optionText;
+  ansTwo.innerHTML = questionAns.answers[1].optionText;
+  ansThree.innerHTML = questionAns.answers[2].optionText;
+  ansFour.innerHTML = questionAns.answers[3].optionText;
 }
 
-/* function myRand(arr) {
-  //fix
-  return arr[0];
+// Check if answer button clicked
+
+ansOne.addEventListener("click", function () {
+  userChoice(0);
+});
+
+ansTwo.addEventListener("click", function () {
+  userChoice(1);
+});
+
+ansThree.addEventListener("click", function () {
+  userChoice(2);
+});
+
+ansFour.addEventListener("click", function () {
+  userChoice(3);
+});
+
+function userChoice(answerIndex) {
+  if (selectedQuestion.answers[answerIndex].correct) {
+    alert("Correct!");
+  } else {
+    alert("Wrong");
+  }
 }
-
-var randQuestion = myRand(codeQuiz2);
-
-randQuestion.questionText;
- */
