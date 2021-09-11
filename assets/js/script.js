@@ -7,7 +7,9 @@ var ansTwo = document.querySelector("#ansOptionTwo");
 var ansThree = document.querySelector("#ansOptionThree");
 var ansFour = document.querySelector("#ansOptionFour");
 var nextQuestion = document.querySelector("#nextBtn");
+
 var selectedQuestion = null; // Global variable to save the currents question state
+var score = 0;
 
 // An array of objects to store Questions and Answers
 
@@ -66,8 +68,8 @@ startBtn.addEventListener("click", renderCodeQuiz);
 // Fucntion to render the question and answers
 
 function renderCodeQuiz() {
-  var codeQuizArr = generateQuestionsandAnswers();
-  var questionAns = randomQuestionGenerator(codeQuizArr);
+ 
+  var questionAns = randomQuestionGenerator(codeQuiz);
   selectedQuestion = questionAns;
 
   quizQuestion.textContent = questionAns.questionText;
@@ -97,8 +99,22 @@ ansFour.addEventListener("click", function () {
 
 function userChoice(answerIndex) {
   if (selectedQuestion.answers[answerIndex].correct) {
-    alert("Correct!");
+    score += 10;
+    document.querySelector("#answerResult").textContent = "Correct!" + score;
   } else {
-    alert("Wrong");
+    score -= 5;
+    document.querySelector("#answerResult").textContent = "Wrong!" + score;
+  }
+}
+
+function getHighScore(){
+  var highScrore = localStorage.getItem("score");
+  if(highScrore==null){
+    score=0;
+  }
+  
+  function setHighScore(){
+    var highScrore = localStorage.setItem("score",score);
+    document.querySelector("#highScore").textContent = highScrore;
   }
 }
