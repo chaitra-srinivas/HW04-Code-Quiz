@@ -10,6 +10,8 @@ var nextQuestion = document.querySelector("#nextBtn");
 
 var selectedQuestion = null; // Global variable to save the currents question state
 var score = 0;
+var currentQuestionIndex = -1;
+
 
 // An array of objects to store Questions and Answers
 
@@ -63,20 +65,35 @@ function randomQuestionGenerator(codeQuiz) {
 
 // Render a random question on click of start button
 
-startBtn.addEventListener("click", renderCodeQuiz);
+startBtn.addEventListener("click", startQuiz);
+
+// Function start game
+
+function startQuiz(){
+  document.querySelector(".quiz-introduction").style.display = "none";
+  document.querySelector(".quiz-questions").style.display = "block";
+  document.querySelector(".quiz-result").style.display = "none";
+  displayNextQuestion();
+}
 
 // Fucntion to render the question and answers
 
-function renderCodeQuiz() {
+function displayNextQuestion() {
  
-  var questionAns = randomQuestionGenerator(codeQuiz);
-  selectedQuestion = questionAns;
+  currentQuestionIndex++;
+  if(currentQuestionIndex >= codeQuiz.length){
+    document.querySelector(".quiz-introduction").style.display = "none";
+    document.querySelector(".quiz-questions").style.display = "none";
+    document.querySelector(".quiz-result").style.display = "block";
 
-  quizQuestion.textContent = questionAns.questionText;
-  ansOne.innerHTML = questionAns.answers[0].optionText;
-  ansTwo.innerHTML = questionAns.answers[1].optionText;
-  ansThree.innerHTML = questionAns.answers[2].optionText;
-  ansFour.innerHTML = questionAns.answers[3].optionText;
+  }else{
+  selectedQuestion = codeQuiz[currentQuestionIndex];
+  quizQuestion.textContent = selectedQuestion.questionText;
+  ansOne.innerHTML = selectedQuestion.answers[0].optionText;
+  ansTwo.innerHTML = selectedQuestion.answers[1].optionText;
+  ansThree.innerHTML = selectedQuestion.answers[2].optionText;
+  ansFour.innerHTML = selectedQuestion.answers[3].optionText;
+}
 }
 
 // Check if answer button clicked
@@ -101,11 +118,15 @@ function userChoice(answerIndex) {
   if (selectedQuestion.answers[answerIndex].correct) {
     score += 10;
     document.querySelector("#answerResult").textContent = "Correct!" + score;
+    
   } else {
     score -= 5;
     document.querySelector("#answerResult").textContent = "Wrong!" + score;
   }
+  displayNextQuestion();
 }
+
+// Function
 
 function getHighScore(){
   var highScrore = localStorage.getItem("score");

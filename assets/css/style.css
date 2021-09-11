@@ -68,6 +68,10 @@ section {
   border-radius: 8px;
 }
 
+.hidden{
+  display:none;
+}
+
 .quiz_introduction {
   width: 55vw;
   height: 200px;

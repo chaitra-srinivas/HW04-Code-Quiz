@@ -18,7 +18,8 @@
       </div>
       <div class="results">
         <span id="highScore">0</span>
-        High Score </div>
+        High Score
+      </div>
       <button class="reset-button">Reset Score</button>
 
     </nav>
@@ -26,31 +27,35 @@
 
   <main>
 
-    <section>
-      <div class="card code-quiz">
-        <div id="quiz-section">
-          <div id="question">
-            <p>
-              Take this quiz to test your knowledge of Javascript fundamental concepts.</br>
-              There are 10 multiple choice questions. You have 10 minutes to answer them all.
-              Be aware that wrong answers add 30 secs to the timer.</br>
-              Good luck!
-            </p>
-          </div>
-          <div id="options">
-            <ul id="listOptions">
-            <li id="listItemOptions"><button type="button" id="ansOptionOne"></button></li>
-            <li id="listItemOptions"><button type="button" id="ansOptionThree"></button></li>
-            <li id="listItemOptions"><button type="button" id="ansOptionTwo"></button></li>
-            <li id="listItemOptions"><button type="button" id="ansOptionFour"></button></li>
-            <li id="listItemOptions"><button type="button" id="nextBtn">Next ></button></li>
-          </ul>
-          </div>
-        </div>
-        <div id="answerResult">
-        </div>
+    <section class="quiz-introduction"> 
+      <div id="quiz-section">
+        <p>
+          Take this quiz to test your knowledge of Javascript fundamental concepts.</br>
+          There are 10 multiple choice questions. You have 10 minutes to answer them all.
+          Be aware that wrong answers add 30 secs to the timer.</br>
+          Good luck!
+        </p>
         <button class="start-button">Start</button>
       </div>
+    </section>
+
+    <section class="quiz-questions hidden" >
+      <div id="question"></div>
+      <div id="options">
+        <ul id="listOptions">
+          <li id="listItemOptions"><button type="button" id="ansOptionOne"></button></li>
+          <li id="listItemOptions"><button type="button" id="ansOptionThree"></button></li>
+          <li id="listItemOptions"><button type="button" id="ansOptionTwo"></button></li>
+          <li id="listItemOptions"><button type="button" id="ansOptionFour"></button></li>
+        </ul>
+      </div>
+      <div id="answerResult"></div>
+    </section>
+    <section class="quiz-result hidden"> 
+      <h2>Game Over!</h2>
+      <h3>Your score: <span id="your-score"></span> </h3>
+      <input type="text" id="initials">
+      <button type="button">Submit</button>
     </section>
   </main>
   <script src="assets/js/script.js"></script>
