@@ -9,20 +9,19 @@
 
 <body>
   <header>
-   
     <nav class="nav-bar">
       <div class="timer-text">Time: <span id="timer-count"> 10</span></div>
-      <div class="title">Javascript Fundamentals Quiz</div>
-      <div class="results">High Score <span id="highScore">0</span> </div>
+      
+    <!--   <div class="results">High Score</div> -->
     </nav>
+    <div class="title">Javascript Fundamentals Quiz</div>
   </header>
 
   <main>
-
     <section id="quiz-introduction" class="card">
       <div id="quiz-section">
         <p>
-          Take this quiz to test your knowledge of Javascript fundamental concepts.</br>
+          Take this quiz to test your knowledge of Javascript fundamental concepts.
           There are 10 multiple choice questions. You have 10 minutes to answer them all.
           Be aware that wrong answers add 30 secs to the timer.</br>
           Good luck!
@@ -46,8 +45,14 @@
     <section id="quiz-result" class="card hidden">
       <h2>Game Over!</h2>
       <h3>Your score: <span id="your-score"></span> </h3>
+      <h3><span id="userInitials"> </span></h3>
       <input type="text" id="initials">
       <button type="button" id="submit">Submit</button>
+    </section>
+    <section id="displayHighScore" class="card  hidden">
+      <span id="highScore">
+        Here are the scores!</span>
+        <ul id="dynamic-list"></ul> 
     </section>
   </main>
   <script src="assets/js/script.js"></script>
