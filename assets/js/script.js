@@ -140,14 +140,19 @@ submitBtn.addEventListener("click", saveScore);
 function saveScore() {
 
   var userInitials = document.querySelector("#initials").value;
-
+  var userScore = score;
   // Create object with user data
   var userData = [];
-  userData.push(userInitials + '-' + score);
+  var scoreList = localStorage.getItem("userData");
+  if(scoreList){
+    userData = JSON.parse(scoreList);
+  }
+   
+  userData.push(userInitials + '-' + userScore);
 
   // setting values for local storage
   localStorage.setItem("userData", JSON.stringify(userData));
-  
+
   renderStoredResults();
 
 }
@@ -162,8 +167,10 @@ function renderStoredResults() {
   document.querySelector("#quiz-questions").style.display = "none";
   document.querySelector("#quiz-result").style.display = "none";
 
-  var listOfScores = []; 
-   listOfScores.push(JSON.parse(localStorage.getItem("userData")));
+
+  var  listOfScores = JSON.parse(localStorage.getItem("userData"));
+  
+  alert(listOfScores);
 
 
   if (listOfScores !== null) {
@@ -171,25 +178,38 @@ function renderStoredResults() {
     var scoreList = document.createElement("ul");
     scoreList.id = "#dynamic-list";
     for (var i = 0; i < listOfScores.length; i++) {
-     /*  var initials = listOfScores[i].userIn;
-      var scores = listOfScores[i].userScore; */
-      var li = document.createElement("li"); 
+       var li = document.createElement("li");
       scoreList.appendChild(li);
-      li.innerHTML = listOfScores;
+      li.innerHTML = listOfScores[i];
       scoreList.appendChild(li);
     }
-     
+
 
   }
-  document.querySelector("#dynamic-list").appendChild(scoreList); 
+  document.querySelector("#dynamic-list").appendChild(scoreList);
 }
 
 
 // Function to restart the quiz
 
-function refreshPage(){
+function refreshPage() {
   window.location.reload();
 }
 
 backBtn.addEventListener("click", refreshPage);
 
+clrScoresBtn.addEventListener("click", clearScores);
+
+//Function to clear scores
+
+function clearScores(){
+ 
+  var userScores = JSON.parse(localStorage.getItem("userData"));
+ 
+  if (userScores !== null) {
+    localStorage.clear();
+   var dynamicList =  document.getElementById("#dynamic-list");
+   dynamicList.parentNode.removeChild(dynamicList);
+   
+}
+}
