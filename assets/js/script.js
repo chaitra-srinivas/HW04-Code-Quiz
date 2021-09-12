@@ -70,9 +70,9 @@ startBtn.addEventListener("click", startQuiz);
 // Function start game
 
 function startQuiz(){
-  document.querySelector(".quiz-introduction").style.display = "none";
-  document.querySelector(".quiz-questions").style.display = "block";
-  document.querySelector(".quiz-result").style.display = "none";
+  document.querySelector("#quiz-introduction").style.display = "none";
+  document.querySelector("#quiz-questions").style.display = "block";
+  document.querySelector("#quiz-result").style.display = "none";
   displayNextQuestion();
 }
 
@@ -82,9 +82,9 @@ function displayNextQuestion() {
  
   currentQuestionIndex++;
   if(currentQuestionIndex >= codeQuiz.length){
-    document.querySelector(".quiz-introduction").style.display = "none";
-    document.querySelector(".quiz-questions").style.display = "none";
-    document.querySelector(".quiz-result").style.display = "block";
+    document.querySelector("#quiz-introduction").style.display = "none";
+    document.querySelector("#quiz-questions").style.display = "none";
+    document.querySelector("#quiz-result").style.display = "block";
 
   }else{
   selectedQuestion = codeQuiz[currentQuestionIndex];

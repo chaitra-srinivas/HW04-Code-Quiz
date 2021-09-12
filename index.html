@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Code Quiz</title>
   <meta charset="UTF-8" />
@@ -10,24 +9,17 @@
 
 <body>
   <header>
-    <div class="large-font">Javascript Fundamentals Quiz</div>
-
+   
     <nav class="nav-bar">
-      <div class="timer-text">
-        <div class="timer-count">Time: 10</div>
-      </div>
-      <div class="results">
-        <span id="highScore">0</span>
-        High Score
-      </div>
-      <button class="reset-button">Reset Score</button>
-
+      <div class="timer-text">Time: <span id="timer-count"> 10</span></div>
+      <div class="title">Javascript Fundamentals Quiz</div>
+      <div class="results">High Score <span id="highScore">0</span> </div>
     </nav>
   </header>
 
   <main>
 
-    <section class="quiz-introduction"> 
+    <section id="quiz-introduction" class="card">
       <div id="quiz-section">
         <p>
           Take this quiz to test your knowledge of Javascript fundamental concepts.</br>
@@ -39,23 +31,23 @@
       </div>
     </section>
 
-    <section class="quiz-questions hidden" >
+    <section id="quiz-questions" class="card hidden">
       <div id="question"></div>
       <div id="options">
         <ul id="listOptions">
           <li id="listItemOptions"><button type="button" id="ansOptionOne"></button></li>
-          <li id="listItemOptions"><button type="button" id="ansOptionThree"></button></li>
           <li id="listItemOptions"><button type="button" id="ansOptionTwo"></button></li>
+          <li id="listItemOptions"><button type="button" id="ansOptionThree"></button></li>
           <li id="listItemOptions"><button type="button" id="ansOptionFour"></button></li>
         </ul>
       </div>
       <div id="answerResult"></div>
     </section>
-    <section class="quiz-result hidden"> 
+    <section id="quiz-result" class="card hidden">
       <h2>Game Over!</h2>
       <h3>Your score: <span id="your-score"></span> </h3>
       <input type="text" id="initials">
-      <button type="button">Submit</button>
+      <button type="button" id="submit">Submit</button>
     </section>
   </main>
   <script src="assets/js/script.js"></script>
