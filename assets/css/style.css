@@ -136,7 +136,9 @@ main {
 #ansOptionTwo,
 #ansOptionThree,
 #ansOptionFour,
-#submit {
+#submit,
+#backBtn,
+#clrScores {
   background: var(--ansOptionsColor);
   color: var(--btnTextColor);
   border-radius: 4px;

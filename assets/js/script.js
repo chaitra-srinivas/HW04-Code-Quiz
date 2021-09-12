@@ -7,6 +7,9 @@ var ansTwo = document.querySelector("#ansOptionTwo");
 var ansThree = document.querySelector("#ansOptionThree");
 var ansFour = document.querySelector("#ansOptionFour");
 var submitBtn = document.querySelector("#submit");
+var backBtn = document.querySelector("#backBtn");
+var clrScoresBtn = document.querySelector("#clrScores");
+
 
 var selectedQuestion = null; // Global variable to save the current question state
 var score = 0;
@@ -182,4 +185,11 @@ function renderStoredResults() {
 }
 
 
+// Function to restart the quiz
+
+function refreshPage(){
+  window.location.reload();
+}
+
+backBtn.addEventListener("click", refreshPage);
 
