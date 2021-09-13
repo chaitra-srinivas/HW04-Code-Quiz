@@ -1,7 +1,6 @@
 // Assignment code
-var quizSection = document.querySelector("#quiz-section");
+
 var startBtn = document.querySelector(".start-button");
-var quizQuestion = document.querySelector("#question");
 var ansOne = document.querySelector("#ansOptionOne");
 var ansTwo = document.querySelector("#ansOptionTwo");
 var ansThree = document.querySelector("#ansOptionThree");
@@ -10,11 +9,19 @@ var submitBtn = document.querySelector("#submit");
 var backBtn = document.querySelector("#backBtn");
 var clrScoresBtn = document.querySelector("#clrScores");
 
+var quizSection = document.querySelector("#quiz-section");
+var quizQuestion = document.querySelector("#question");
+var quizIntroduction = document.querySelector("#quiz-introduction");
+var quizQuestionsAndOptions = document.querySelector("#quiz-questions");
+var quizResult = document.querySelector("#quiz-result");
+var answerResult = document.querySelector("#answerResult");
+var userQuizScore = document.querySelector("#your-score");
+var displayStoredScore = document.querySelector("#displayHighScore");
+
 
 var selectedQuestion = null; // Global variable to save the current question state
 var score = 0;
 var currentQuestionIndex = -1;
-
 
 // An array of objects to store Questions and Answers
 
@@ -64,9 +71,9 @@ startBtn.addEventListener("click", startQuiz);
 
 // Initial function to be called
 function init() {
-  document.querySelector("#quiz-introduction").style.display = "none";
-  document.querySelector("#quiz-questions").style.display = "block";
-  document.querySelector("#quiz-result").style.display = "none";
+  quizIntroduction.style.display = "none";
+  quizQuestionsAndOptions.style.display = "block";
+  quizResult.style.display = "none";
 }
 
 // Function start game
@@ -79,9 +86,9 @@ function startQuiz() {
 // Renders the results section when user answers all the questions or the quiz times out
 
 function displayResults() {
-  document.querySelector("#quiz-introduction").style.display = "none";
-  document.querySelector("#quiz-questions").style.display = "none";
-  document.querySelector("#quiz-result").style.display = "block";
+  quizIntroduction.style.display = "none";
+  quizQuestionsAndOptions.style.display = "none";
+  quizResult.style.display = "block";
 }
 
 // Fucntion to render the question and answers
@@ -90,7 +97,7 @@ function displayNextQuestion() {
   currentQuestionIndex++; // Renders the first question in the array by incrementing the currentQuestionIndex to 0
   if (currentQuestionIndex >= codeQuiz.length) {
     displayResults();
-    /*  renderStoredResults(); */
+
   } else {
     selectedQuestion = codeQuiz[currentQuestionIndex];
     quizQuestion.textContent = selectedQuestion.questionText;
@@ -122,15 +129,13 @@ ansFour.addEventListener("click", function () {
 function userChoice(answerIndex) {
   if (selectedQuestion.answers[answerIndex].correct) {
     score += 10;
-    document.querySelector("#answerResult").textContent = "Correct!" + score;
-    document.querySelector("#your-score").innerHTML = score;
-
+    answerResult.textContent = "Correct!";
+    userQuizScore.innerHTML = score;
   } else {
-    document.querySelector("#answerResult").textContent = "Wrong!" + score;
+    answerResult.textContent = "Wrong!";
   }
   displayNextQuestion();
 }
-
 
 // on click of submit button call save score
 
@@ -138,78 +143,65 @@ submitBtn.addEventListener("click", saveScore);
 // Fucntion to allow user to save the score
 
 function saveScore() {
-
   var userInitials = document.querySelector("#initials").value;
   var userScore = score;
   // Create object with user data
   var userData = [];
   var scoreList = localStorage.getItem("userData");
-  if(scoreList){
+  if (scoreList) {
     userData = JSON.parse(scoreList);
   }
-   
-  userData.push(userInitials + '-' + userScore);
+
+  userData.push(userInitials + "-" + userScore);
 
   // setting values for local storage
   localStorage.setItem("userData", JSON.stringify(userData));
 
   renderStoredResults();
-
 }
 
 // Function to display user initials and score in local storage
 
 function renderStoredResults() {
+
+  displayStoredScore.style.display = "block";
+  quizIntroduction.style.display = "none";
+  quizQuestionsAndOptions.style.display = "none";
+  quizResult.style.display = "none";
+
   // getting values from the local storage
-
-  document.querySelector("#displayHighScore").style.display = "block";
-  document.querySelector("#quiz-introduction").style.display = "none";
-  document.querySelector("#quiz-questions").style.display = "none";
-  document.querySelector("#quiz-result").style.display = "none";
-
-
-  var  listOfScores = JSON.parse(localStorage.getItem("userData"));
-  
-  alert(listOfScores);
-
+  var listOfScores = JSON.parse(localStorage.getItem("userData"));
 
   if (listOfScores !== null) {
-
-    var scoreList = document.createElement("ul");
+    var scoreList = document.createElement("ol");
     scoreList.id = "#dynamic-list";
     for (var i = 0; i < listOfScores.length; i++) {
-       var li = document.createElement("li");
+      var li = document.createElement("li");
       scoreList.appendChild(li);
       li.innerHTML = listOfScores[i];
       scoreList.appendChild(li);
     }
-
-
   }
   document.querySelector("#dynamic-list").appendChild(scoreList);
 }
 
+backBtn.addEventListener("click", refreshPage);
 
 // Function to restart the quiz
-
 function refreshPage() {
   window.location.reload();
 }
 
-backBtn.addEventListener("click", refreshPage);
-
 clrScoresBtn.addEventListener("click", clearScores);
 
-//Function to clear scores
+//Function to clear scores and the dynamic list
 
-function clearScores(){
- 
+function clearScores() {
   var userScores = JSON.parse(localStorage.getItem("userData"));
- 
+
   if (userScores !== null) {
     localStorage.clear();
-   var dynamicList =  document.getElementById("#dynamic-list");
-   dynamicList.parentNode.removeChild(dynamicList);
-   
-}
+    var dynamicList = document.getElementById("#dynamic-list");
+    dynamicList.parentNode.removeChild(dynamicList);
+  }
 }
