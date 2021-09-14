@@ -18,10 +18,17 @@ var answerResult = document.querySelector("#answerResult");
 var userQuizScore = document.querySelector("#your-score");
 var displayStoredScore = document.querySelector("#displayHighScore");
 
+var timerText = document.querySelector(".timer-text");
+var timerElement = document.querySelector("#timer-count");
 
 var selectedQuestion = null; // Global variable to save the current question state
 var score = 0;
 var currentQuestionIndex = -1;
+
+
+var isFinish = false;
+var timer;
+var timerCount;
 
 // An array of objects to store Questions and Answers
 
@@ -79,8 +86,12 @@ function init() {
 // Function start game
 
 function startQuiz() {
+  isFinish = false;
+  timerCount = 10;
+  startBtn.disabled = true;
   init();
   displayNextQuestion();
+  startTimer();
 }
 
 // Renders the results section when user answers all the questions or the quiz times out
@@ -89,22 +100,28 @@ function displayResults() {
   quizIntroduction.style.display = "none";
   quizQuestionsAndOptions.style.display = "none";
   quizResult.style.display = "block";
+  startButton.disabled = false;
 }
 
 // Fucntion to render the question and answers
 
 function displayNextQuestion() {
   currentQuestionIndex++; // Renders the first question in the array by incrementing the currentQuestionIndex to 0
-  if (currentQuestionIndex >= codeQuiz.length) {
+  if (timerCount > 0) {
+    if (currentQuestionIndex >= codeQuiz.length) {
+      isFinish = true;
+      displayResults();
+    } else {
+      selectedQuestion = codeQuiz[currentQuestionIndex];
+      quizQuestion.textContent = selectedQuestion.questionText;
+      ansOne.innerHTML = selectedQuestion.answers[0].optionText;
+      ansTwo.innerHTML = selectedQuestion.answers[1].optionText;
+      ansThree.innerHTML = selectedQuestion.answers[2].optionText;
+      ansFour.innerHTML = selectedQuestion.answers[3].optionText;
+    }
+  } else if (timerCount === 0) {
+    isFinish = true;
     displayResults();
-
-  } else {
-    selectedQuestion = codeQuiz[currentQuestionIndex];
-    quizQuestion.textContent = selectedQuestion.questionText;
-    ansOne.innerHTML = selectedQuestion.answers[0].optionText;
-    ansTwo.innerHTML = selectedQuestion.answers[1].optionText;
-    ansThree.innerHTML = selectedQuestion.answers[2].optionText;
-    ansFour.innerHTML = selectedQuestion.answers[3].optionText;
   }
 }
 
@@ -133,6 +150,7 @@ function userChoice(answerIndex) {
     userQuizScore.innerHTML = score;
   } else {
     answerResult.textContent = "Wrong!";
+    timerCount = timerCount - 2;
   }
   displayNextQuestion();
 }
@@ -163,7 +181,6 @@ function saveScore() {
 // Function to display user initials and score in local storage
 
 function renderStoredResults() {
-
   displayStoredScore.style.display = "block";
   quizIntroduction.style.display = "none";
   quizQuestionsAndOptions.style.display = "none";
@@ -205,3 +222,29 @@ function clearScores() {
     dynamicList.parentNode.removeChild(dynamicList);
   }
 }
+
+// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+function startTimer() {
+  // Sets timer
+  timer = setInterval(function () {
+    timerCount--;
+    timerElement.textContent = timerCount;
+    if (timerCount >= 0) {
+      // Tests if finish condition is met
+      if (isFinish && timerCount > 0) {
+        // Clears interval and stops timer
+        clearInterval(timer);
+        displayResults();
+
+      }
+    }
+    // Tests if time has run out
+    if (timerCount <= 0) {
+      // Clears interval
+      clearInterval(timer);
+      displayResults();
+
+    }
+  }, 1000);
+}
+
