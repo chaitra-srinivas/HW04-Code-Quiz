@@ -243,7 +243,7 @@ function startTimer() {
       }
     }
     // Tests if time has run out
-    if (timerCount === 0 || timerCount < 0) {
+    if (timerCount === 0) {
       // Clears interval
       clearInterval(timer);
       displayResults();
