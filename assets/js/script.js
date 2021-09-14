@@ -146,6 +146,7 @@ ansFour.addEventListener("click", function () {
 function userChoice(answerIndex) {
   if (selectedQuestion.answers[answerIndex].correct) {
     score += 10;
+
     answerResult.textContent = "Correct!";
     userQuizScore.innerHTML = score;
   } else {
@@ -155,7 +156,7 @@ function userChoice(answerIndex) {
   displayNextQuestion();
 }
 
-// on click of submit button call save score
+// On click of submit button call save score
 
 submitBtn.addEventListener("click", saveScore);
 // Fucntion to allow user to save the score
@@ -169,13 +170,16 @@ function saveScore() {
   if (scoreList) {
     userData = JSON.parse(scoreList);
   }
-
-  userData.push(userInitials + "-" + userScore);
-
-  // setting values for local storage
-  localStorage.setItem("userData", JSON.stringify(userData));
-
-  renderStoredResults();
+  // Only adds user data if both initials and score are available
+  if (userInitials && userScore) {
+    userData.push(userInitials + "-" + userScore);
+    // setting values for local storage
+    localStorage.setItem("userData", JSON.stringify(userData));
+    renderStoredResults();
+  }
+  else {
+    return;
+  }
 }
 
 // Function to display user initials and score in local storage
@@ -239,7 +243,7 @@ function startTimer() {
       }
     }
     // Tests if time has run out
-    if (timerCount <= 0) {
+    if (timerCount === 0 || timerCount < 0) {
       // Clears interval
       clearInterval(timer);
       displayResults();
