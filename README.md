@@ -7,7 +7,7 @@ The quiz has 5 questions to be answered in 10 seconds.Each correct answer reward
 
 The user is allowed to save his score with his initials. There are options to clear the saved scores and go back to the start page.
 
-The application is responsive and can scale to smaller screens.
+The application is responsive and can readjust to smaller screens.
 
 Screen shots:
 1. ![Main page.](./assets/images/startPage.png)
