@@ -81,8 +81,7 @@ header {
   justify-content: flex-start;
 }
 
-#highScore,
-.results {
+#highScore {
   height: 40px;
   margin: 5px;
   padding: 5px;
@@ -105,7 +104,8 @@ main {
 
 #quiz-introduction,
 #quiz-questions,
-#quiz-result {
+#quiz-result,
+#displayHighScore {
   flex: 0 auto;
   padding: 8px;
   margin-top: 50px;
@@ -122,14 +122,12 @@ main {
   display: none;
 }
 
-#listOptions {
+#listOptions,
+#listItemOptions,
+#dynamic-list {
   list-style-type: none;
   padding: 5px;
   text-align: left;
-}
-
-#listItemOptions {
-  padding: 5px;
 }
 
 #ansOptionOne,
@@ -162,7 +160,7 @@ main {
   margin: auto;
   padding: 20px;
   width: 500px;
-  height: 300px;
+  height: 350px;
   align-content: center;
 }
 
@@ -171,7 +169,7 @@ main {
     flex-direction: column;
   }
 
-  .results {
+  #quiz-result {
     width: 90vw;
   }
 
@@ -183,16 +181,60 @@ main {
 }
 
 @media screen and (max-width: 504px) {
-  .large-font {
+  .title {
     font-size: 2em;
   }
 
-  /* .reset-button {
-    font-size: 8px;
-    width: 10ox;
-  } */
+  .start-button {
+    font-size: 1em;
+    letter-spacing: 0.11px;
+    line-height: 8px;
+    max-width: 155px;
+    padding: 10px 32px;
+  }
 
-  .timer {
+  #ansOptionOne,
+  #ansOptionTwo,
+  #ansOptionThree,
+  #ansOptionFour,
+  #submit,
+  #backBtn,
+  #clrScores {
+    border-radius: 4px;
+    font-size: 0.5em;
+    letter-spacing: 0.5px;
+    line-height: 4px;
+    max-width: 155px;
+    padding: 5px 13px;
+    margin-top: 0.1em;
+  }
+
+  #quiz-introduction,
+  #quiz-questions,
+  #quiz-result,
+  #displayHighScore {
+    padding: 4px;
+    margin-top: 25px;
+    border-radius: 4px;
+    font-size: medium;
+    text-align: center;
+  }
+
+  #listOptions,
+  #listItemOptions,
+  #dynamic-list {
+    list-style-type: none;
+    padding: 2.5px;
+    text-align: left;
+  }
+
+  .card {
+    width: 400px;
+    height: 250px;
+  }
+
+  #timer-count,
+  .timer-text {
     height: 25px;
   }
 }
