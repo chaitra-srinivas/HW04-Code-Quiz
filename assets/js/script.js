@@ -1,5 +1,6 @@
 // Assignment code
 
+// selectors for button elmenents
 var startBtn = document.querySelector(".start-button");
 var ansOne = document.querySelector("#ansOptionOne");
 var ansTwo = document.querySelector("#ansOptionTwo");
@@ -9,6 +10,7 @@ var submitBtn = document.querySelector("#submit");
 var backBtn = document.querySelector("#backBtn");
 var clrScoresBtn = document.querySelector("#clrScores");
 
+// Sections 
 var quizSection = document.querySelector("#quiz-section");
 var quizQuestion = document.querySelector("#question");
 var quizIntroduction = document.querySelector("#quiz-introduction");
@@ -16,8 +18,11 @@ var quizQuestionsAndOptions = document.querySelector("#quiz-questions");
 var quizResult = document.querySelector("#quiz-result");
 var answerResult = document.querySelector("#answerResult");
 var userQuizScore = document.querySelector("#your-score");
-var displayStoredScore = document.querySelector("#displayHighScore");
+var displayStoredScoreEl = document.querySelector("#displayHighScore");
+var userInitialsEl = document.querySelector("#initials");
+var dynamicListEl = document.querySelector("#dynamic-list");
 
+// timer section
 var timerText = document.querySelector(".timer-text");
 var timerElement = document.querySelector("#timer-count");
 
@@ -25,7 +30,7 @@ var selectedQuestion = null; // Global variable to save the current question sta
 var score = 0;
 var currentQuestionIndex = -1;
 
-
+// Global variables for the timer
 var isFinish = false;
 var timer;
 var timerCount;
@@ -34,7 +39,7 @@ var timerCount;
 
 var codeQuiz = [
   {
-    questionText: "Arrays in Javascript are used to store:",
+    questionText: "Arrays in Javascript are used to store",
     answers: [
       { optionText: "Numbers and Strings", correct: false },
       { optionText: "Boolean", correct: false },
@@ -44,7 +49,7 @@ var codeQuiz = [
   },
 
   {
-    questionText: "Which one of these is a primitive data type in Javascript?:",
+    questionText: "Which one of these is a primitive data type in Javascript?",
     answers: [
       { optionText: "String", correct: false },
       { optionText: "Boolean", correct: false },
@@ -54,7 +59,7 @@ var codeQuiz = [
   },
 
   {
-    questionText: "Strings in Javascript should be enclosed within _______:",
+    questionText: "Strings in Javascript should be enclosed within _______",
     answers: [
       { optionText: "Quotes", correct: true },
       { optionText: "Question Marks", correct: false },
@@ -64,7 +69,7 @@ var codeQuiz = [
   },
 
   {
-    questionText: "The if...else condition is enclosed within _______:",
+    questionText: "The if...else condition is enclosed within _______",
     answers: [
       { optionText: "Quotes", correct: false },
       { optionText: "Question Marks", correct: false },
@@ -72,19 +77,24 @@ var codeQuiz = [
       { optionText: "Curly braces", correct: false },
     ],
   },
+
+  {
+    questionText: "A very useful tool used during development and debugging and for printing content to the debugger is: _______:",
+    answers: [
+      { optionText: "Javascript", correct: false },
+      { optionText: "Terminal/bash", correct: false },
+      { optionText: "console.log", correct: true },
+      { optionText: "alerts", correct: false },
+    ],
+  },
 ];
 
+// Quiz Introduction section
+
+// Start button invokes the startQuiz function
 startBtn.addEventListener("click", startQuiz);
 
-// Initial function to be called
-function init() {
-  quizIntroduction.style.display = "none";
-  quizQuestionsAndOptions.style.display = "block";
-  quizResult.style.display = "none";
-}
-
-// Function start game
-
+// Function start game 
 function startQuiz() {
   isFinish = false;
   timerCount = 10;
@@ -94,14 +104,15 @@ function startQuiz() {
   startTimer();
 }
 
-// Renders the results section when user answers all the questions or the quiz times out
-
-function displayResults() {
+// Initial function to be called
+function init() {
   quizIntroduction.style.display = "none";
-  quizQuestionsAndOptions.style.display = "none";
-  quizResult.style.display = "block";
-  startButton.disabled = false;
+  quizQuestionsAndOptions.style.display = "block";
+  quizResult.style.display = "none";
 }
+
+
+// Quiz questions and answers section
 
 // Fucntion to render the question and answers
 
@@ -125,7 +136,7 @@ function displayNextQuestion() {
   }
 }
 
-// Check if answer button clicked
+// Check if answer button is clicked
 
 ansOne.addEventListener("click", function () {
   userChoice(0);
@@ -143,18 +154,34 @@ ansFour.addEventListener("click", function () {
   userChoice(3);
 });
 
+// verifies the answer and displays next question
 function userChoice(answerIndex) {
   if (selectedQuestion.answers[answerIndex].correct) {
     score += 10;
-
     answerResult.textContent = "Correct!";
     userQuizScore.innerHTML = score;
   } else {
     answerResult.textContent = "Wrong!";
     timerCount = timerCount - 2;
+    userQuizScore.innerHTML = score;
   }
   displayNextQuestion();
 }
+
+
+// Renders the results section when user answers all the questions or the quiz times out
+
+function displayResults() {
+  // If no answers were chosen and the time ran out
+  if(timerCount === 0 && score === 0){
+    userQuizScore.innerHTML = score;
+  }
+  quizIntroduction.style.display = "none";
+  quizQuestionsAndOptions.style.display = "none";
+  quizResult.style.display = "block";
+  startButton.disabled = false;
+}
+
 
 // On click of submit button call save score
 
@@ -162,7 +189,7 @@ submitBtn.addEventListener("click", saveScore);
 // Fucntion to allow user to save the score
 
 function saveScore() {
-  var userInitials = document.querySelector("#initials").value;
+  var userInitials = userInitialsEl.value;
   var userScore = score;
   // Create object with user data
   var userData = [];
@@ -170,8 +197,8 @@ function saveScore() {
   if (scoreList) {
     userData = JSON.parse(scoreList);
   }
-  // Only adds user data if both initials and score are available
-  if (userInitials && userScore) {
+  // Only adds user data if initials is available
+  if(userInitials){
     userData.push(userInitials + "-" + userScore);
     // setting values for local storage
     localStorage.setItem("userData", JSON.stringify(userData));
@@ -182,10 +209,11 @@ function saveScore() {
   }
 }
 
+// Quiz results section 
 // Function to display user initials and score in local storage
 
 function renderStoredResults() {
-  displayStoredScore.style.display = "block";
+  displayStoredScoreEl.style.display = "block";
   quizIntroduction.style.display = "none";
   quizQuestionsAndOptions.style.display = "none";
   quizResult.style.display = "none";
@@ -193,9 +221,9 @@ function renderStoredResults() {
   // getting values from the local storage
   var listOfScores = JSON.parse(localStorage.getItem("userData"));
 
-  if (listOfScores !== null) {
+  if (listOfScores !== null) {    //  Creates a list of scores dynamically from localstorage
     var scoreList = document.createElement("ol");
-    scoreList.id = "#dynamic-list";
+    scoreList.id = dynamicListEl;
     for (var i = 0; i < listOfScores.length; i++) {
       var li = document.createElement("li");
       scoreList.appendChild(li);
@@ -203,52 +231,42 @@ function renderStoredResults() {
       scoreList.appendChild(li);
     }
   }
-  document.querySelector("#dynamic-list").appendChild(scoreList);
+  dynamicListEl.appendChild(scoreList);
 }
 
-backBtn.addEventListener("click", refreshPage);
+//Function to clear scores and the dynamic list
+function clearScores() { 
+  var userScores = JSON.parse(localStorage.getItem("userData"));
+
+  if (userScores !== null) {
+    localStorage.clear();
+    var dynamicList = dynamicListEl;
+    dynamicList.parentNode.removeChild(dynamicList);
+  }
+}
 
 // Function to restart the quiz
 function refreshPage() {
   window.location.reload();
 }
 
-clrScoresBtn.addEventListener("click", clearScores);
 
-//Function to clear scores and the dynamic list
+backBtn.addEventListener("click", refreshPage); // Takes the user back to the start page
+clrScoresBtn.addEventListener("click", clearScores); // Clears scores
 
-function clearScores() {
-  var userScores = JSON.parse(localStorage.getItem("userData"));
+// Timer section
 
-  if (userScores !== null) {
-    localStorage.clear();
-    var dynamicList = document.getElementById("#dynamic-list");
-    dynamicList.parentNode.removeChild(dynamicList);
-  }
-}
-
-// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+// The setTimer function starts and stops the timer
 function startTimer() {
-  // Sets timer
-  timer = setInterval(function () {
+  timer = setInterval(function () { // Sets timer
     timerCount--;
     timerElement.textContent = timerCount;
-    if (timerCount >= 0) {
-      // Tests if finish condition is met
-      if (isFinish && timerCount > 0) {
-        // Clears interval and stops timer
+      
+      if(isFinish || timerCount === 0){   // Tests if finish condition is met
         clearInterval(timer);
         displayResults();
-
       }
-    }
-    // Tests if time has run out
-    if (timerCount === 0) {
-      // Clears interval
-      clearInterval(timer);
-      displayResults();
 
-    }
   }, 1000);
 }
 
