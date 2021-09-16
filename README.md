@@ -14,5 +14,5 @@ Screen shots:
 4. ![List of scores](./assets/images/listOfStoredScores.png)
 
 
-1. ![Deployed application]: https://chaitra-srinivas.github.io/
-2. ![Github link]: https://github.com/chaitra-srinivas/
+1. ![Deployed application]: https://chaitra-srinivas.github.io/HW04-Code-Quiz/
+2. ![Github link]: https://github.com/chaitra-srinivas/HW04-Code-Quiz
