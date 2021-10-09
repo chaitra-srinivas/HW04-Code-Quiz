@@ -1,4 +1,4 @@
-# HW04-Code-Quiz
+# JavaScript-Code-Quiz
 # Overview
 
 In this assignment I have tried to build a timed code quiz application that presents the user with a few Javascript fundamental questions. The user can choose an answer from a set of four options. These answer options are clickable buttons. When the user selects an answer, the application verifies the user input and displays the result on the card. The application then progresses to the next question until all the questions are answered or the quiz times out.
